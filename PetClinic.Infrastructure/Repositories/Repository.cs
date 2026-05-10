@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using PetClinic.Core.Entities;
 using PetClinic.Core.Interfaces;
 using PetClinic.Infrastructure.Data;
 
 namespace PetClinic.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly AppDbContext _db;
 

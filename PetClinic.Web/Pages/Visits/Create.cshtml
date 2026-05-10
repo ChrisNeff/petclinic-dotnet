@@ -4,29 +4,32 @@
     ViewData["Title"] = "Add Visit";
 }
 
-<h2>Add Visit for @Model.PetName</h2>
+<h2 class="text-2xl font-bold text-navy mb-1">Add Visit</h2>
+<p class="text-gray-500 text-sm mb-1">For <span class="font-semibold text-navy">@Model.PetName</span></p>
+<div class="w-10 h-1 rounded bg-cyan mb-6"></div>
 
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Visit.PetId" type="hidden" />
+<div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 max-w-lg">
+    <form method="post" class="space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+        <input asp-for="Visit.PetId" type="hidden" />
 
-            <div class="mb-3">
-                <label asp-for="Visit.VisitDate" class="form-label"></label>
-                <input asp-for="Visit.VisitDate" type="date" class="form-control" />
-                <span asp-validation-for="Visit.VisitDate" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Visit.Description" class="form-label"></label>
-                <textarea asp-for="Visit.Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Visit.Description" class="text-danger"></span>
-            </div>
+        <div>
+            <label asp-for="Visit.VisitDate" class="block text-sm font-medium text-navy mb-1"></label>
+            <input asp-for="Visit.VisitDate" type="date" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand" />
+            <span asp-validation-for="Visit.VisitDate" class="text-red-500 text-xs"></span>
+        </div>
+        <div>
+            <label asp-for="Visit.Description" class="block text-sm font-medium text-navy mb-1"></label>
+            <textarea asp-for="Visit.Description" rows="3"
+                      class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand"></textarea>
+            <span asp-validation-for="Visit.Description" class="text-red-500 text-xs"></span>
+        </div>
 
-            <button type="submit" class="btn btn-success">Save</button>
-            <a asp-page="/Owners/Detail" asp-route-id="@Model.OwnerId" class="btn btn-outline-secondary ms-1">Cancel</a>
-        </form>
-    </div>
+        <div class="flex gap-3 pt-2">
+            <button type="submit" class="bg-brand hover:bg-navy text-white font-semibold text-sm px-5 py-2 rounded transition-colors">Save</button>
+            <a asp-page="/Owners/Detail" asp-route-id="@Model.OwnerId" class="border border-gray-300 text-gray-600 hover:border-brand hover:text-brand text-sm px-5 py-2 rounded transition-colors">Cancel</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

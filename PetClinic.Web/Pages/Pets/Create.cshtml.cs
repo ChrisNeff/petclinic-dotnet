@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using PetClinic.Core.Entities;
-using PetClinic.Infrastructure.Data;
+using PetClinic.Core.Interfaces;
 
 namespace PetClinic.Web.Pages.Pets;
 
 public class CreateModel : PageModel
 {
-    private readonly AppDbContext _db;
+    private readonly IRepository<Pet> _pets;
+    private readonly IRepository<PetType> _petTypes;
 
-    public CreateModel(AppDbContext db) => _db = db;
+    public CreateModel(IRepository<Pet> pets, IRepository<PetType> petTypes)
+    {
+        _pets = pets;
+        _petTypes = petTypes;
+    }
 
     [BindProperty]
     public Pet Pet { get; set; } = new();
@@ -21,7 +25,8 @@ public class CreateModel : PageModel
     public async Task<IActionResult> OnGetAsync(int ownerId)
     {
         Pet.OwnerId = ownerId;
-        PetTypes = new SelectList(await _db.PetTypes.OrderBy(t => t.Name).ToListAsync(), "Id", "Name");
+        var types = await _petTypes.ListAsync();
+        PetTypes = new SelectList(types.OrderBy(t => t.Name), "Id", "Name");
         return Page();
     }
 
@@ -29,12 +34,12 @@ public class CreateModel : PageModel
     {
         if (!ModelState.IsValid)
         {
-            PetTypes = new SelectList(await _db.PetTypes.OrderBy(t => t.Name).ToListAsync(), "Id", "Name");
+            var types = await _petTypes.ListAsync();
+            PetTypes = new SelectList(types.OrderBy(t => t.Name), "Id", "Name");
             return Page();
         }
 
-        _db.Pets.Add(Pet);
-        await _db.SaveChangesAsync();
+        await _pets.AddAsync(Pet);
         return RedirectToPage("/Owners/Detail", new { id = Pet.OwnerId });
     }
 }

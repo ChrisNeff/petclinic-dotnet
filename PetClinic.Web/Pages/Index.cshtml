@@ -4,41 +4,30 @@
     ViewData["Title"] = "Welcome";
 }
 
-<div class="text-center py-5">
-    <h1 class="display-5 fw-bold">Welcome to PetClinic</h1>
-    <p class="lead text-muted">A .NET 8 demo application — EF Core, Repository Pattern, ASP.NET Core</p>
-    <div class="mt-4">
-        <a asp-page="/Owners/Index" class="btn btn-success btn-lg me-2">Find Owners</a>
-        <a asp-page="/Vets/Index" class="btn btn-outline-success btn-lg">View Veterinarians</a>
+<div class="text-center py-16">
+    <h1 class="text-4xl font-bold text-navy mb-3">Welcome to PetClinic</h1>
+    <div class="mx-auto w-16 h-1 rounded bg-cyan mb-6"></div>
+    <p class="text-gray-500 text-lg mb-8">A .NET port of the Spring PetClinic sample application</p>
+    <div class="flex justify-center gap-4">
+        <a asp-page="/Owners/Index" class="bg-brand hover:bg-navy text-white font-semibold px-6 py-2 rounded transition-colors">Find Owners</a>
+        <a asp-page="/Vets/Index"   class="border border-brand text-brand hover:bg-brand hover:text-white font-semibold px-6 py-2 rounded transition-colors">Veterinarians</a>
     </div>
 </div>
 
-<div class="row mt-5 text-center">
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <div class="card-body">
-                <h5 class="card-title">Owners &amp; Pets</h5>
-                <p class="card-text text-muted">Browse and manage pet owners and their animals.</p>
-                <a asp-page="/Owners/Index" class="btn btn-sm btn-success">Go</a>
-            </div>
-        </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+    <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <h5 class="font-bold text-navy mb-2">Owners &amp; Pets</h5>
+        <p class="text-gray-500 text-sm mb-4">Browse and manage pet owners and their animals.</p>
+        <a asp-page="/Owners/Index" class="text-sm bg-brand hover:bg-navy text-white px-4 py-1.5 rounded transition-colors">Go</a>
     </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <div class="card-body">
-                <h5 class="card-title">Veterinarians</h5>
-                <p class="card-text text-muted">View the clinic's vets and their specialties.</p>
-                <a asp-page="/Vets/Index" class="btn btn-sm btn-success">Go</a>
-            </div>
-        </div>
+    <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <h5 class="font-bold text-navy mb-2">Veterinarians</h5>
+        <p class="text-gray-500 text-sm mb-4">View the clinic's vets and their specialties.</p>
+        <a asp-page="/Vets/Index" class="text-sm bg-brand hover:bg-navy text-white px-4 py-1.5 rounded transition-colors">Go</a>
     </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <div class="card-body">
-                <h5 class="card-title">REST API</h5>
-                <p class="card-text text-muted">Explore the full API surface via Swagger UI.</p>
-                <a href="/swagger" class="btn btn-sm btn-outline-secondary">Go</a>
-            </div>
-        </div>
+    <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <h5 class="font-bold text-navy mb-2">REST API</h5>
+        <p class="text-gray-500 text-sm mb-4">Explore the full API surface via Swagger UI.</p>
+        <a href="/swagger" class="text-sm border border-gray-300 text-gray-600 hover:border-brand hover:text-brand px-4 py-1.5 rounded transition-colors">Go</a>
     </div>
 </div>

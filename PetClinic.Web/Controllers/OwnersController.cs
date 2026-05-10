@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PetClinic.Core.Entities;
-using PetClinic.Infrastructure.Data;
+using PetClinic.Core.Interfaces;
 
 namespace PetClinic.Web.Controllers;
 
@@ -10,29 +9,24 @@ namespace PetClinic.Web.Controllers;
 [Produces("application/json")]
 public class OwnersController : ControllerBase
 {
-    private readonly AppDbContext _db;
+    private readonly IOwnerRepository _owners;
 
-    public OwnersController(AppDbContext db) => _db = db;
+    public OwnersController(IOwnerRepository owners) => _owners = owners;
 
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] string? lastName)
     {
-        var query = _db.Owners.Include(o => o.Pets).ThenInclude(p => p.PetType).AsQueryable();
+        var result = string.IsNullOrWhiteSpace(lastName)
+            ? await _owners.ListAsync()
+            : await _owners.SearchByLastNameAsync(lastName);
 
-        if (!string.IsNullOrWhiteSpace(lastName))
-            query = query.Where(o => o.LastName.Contains(lastName));
-
-        return Ok(await query.OrderBy(o => o.LastName).ToListAsync());
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var owner = await _db.Owners
-            .Include(o => o.Pets).ThenInclude(p => p.PetType)
-            .Include(o => o.Pets).ThenInclude(p => p.Visits)
-            .FirstOrDefaultAsync(o => o.Id == id);
-
+        var owner = await _owners.GetByIdWithPetsAsync(id);
         return owner == null ? NotFound() : Ok(owner);
     }
 
@@ -41,8 +35,7 @@ public class OwnersController : ControllerBase
     {
         if (!ModelState.IsValid) return ValidationProblem();
 
-        _db.Owners.Add(owner);
-        await _db.SaveChangesAsync();
+        await _owners.AddAsync(owner);
         return CreatedAtAction(nameof(GetById), new { id = owner.Id }, owner);
     }
 
@@ -52,26 +45,20 @@ public class OwnersController : ControllerBase
         if (id != owner.Id) return BadRequest();
         if (!ModelState.IsValid) return ValidationProblem();
 
-        _db.Entry(owner).State = EntityState.Modified;
+        var existing = await _owners.GetByIdAsync(id);
+        if (existing == null) return NotFound();
 
-        try { await _db.SaveChangesAsync(); }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _db.Owners.AnyAsync(o => o.Id == id)) return NotFound();
-            throw;
-        }
-
+        await _owners.UpdateAsync(owner);
         return NoContent();
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var owner = await _db.Owners.FindAsync(id);
+        var owner = await _owners.GetByIdAsync(id);
         if (owner == null) return NotFound();
 
-        _db.Owners.Remove(owner);
-        await _db.SaveChangesAsync();
+        await _owners.DeleteAsync(owner);
         return NoContent();
     }
 }

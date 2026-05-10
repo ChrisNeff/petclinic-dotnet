@@ -3,6 +3,12 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# SQLite database files (except the seeded dev db)
+*.db
+*.db-shm
+*.db-wal
+!PetClinic.Web/petclinic.db
+
 # dotenv files
 .env
 

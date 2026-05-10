@@ -4,43 +4,33 @@
     ViewData["Title"] = "Add Owner";
 }
 
-<h2>Add Owner</h2>
+<h2 class="text-2xl font-bold text-navy mb-1">Add Owner</h2>
+<div class="w-10 h-1 rounded bg-cyan mb-6"></div>
 
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 max-w-lg">
+    <form method="post" class="space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
 
-            <div class="mb-3">
-                <label asp-for="Owner.FirstName" class="form-label"></label>
-                <input asp-for="Owner.FirstName" class="form-control" />
-                <span asp-validation-for="Owner.FirstName" class="text-danger"></span>
+        @foreach (var (label, prop, forId) in new[] {
+            ("First Name", "Owner.FirstName", "Owner_FirstName"),
+            ("Last Name",  "Owner.LastName",  "Owner_LastName"),
+            ("Address",    "Owner.Address",   "Owner_Address"),
+            ("City",       "Owner.City",      "Owner_City"),
+            ("Telephone",  "Owner.Telephone", "Owner_Telephone")
+        })
+        {
+            <div>
+                <label asp-for="@prop" class="block text-sm font-medium text-navy mb-1">@label</label>
+                <input asp-for="@prop" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand" />
+                <span asp-validation-for="@prop" class="text-red-500 text-xs"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Owner.LastName" class="form-label"></label>
-                <input asp-for="Owner.LastName" class="form-control" />
-                <span asp-validation-for="Owner.LastName" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Owner.Address" class="form-label"></label>
-                <input asp-for="Owner.Address" class="form-control" />
-                <span asp-validation-for="Owner.Address" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Owner.City" class="form-label"></label>
-                <input asp-for="Owner.City" class="form-control" />
-                <span asp-validation-for="Owner.City" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Owner.Telephone" class="form-label"></label>
-                <input asp-for="Owner.Telephone" class="form-control" />
-                <span asp-validation-for="Owner.Telephone" class="text-danger"></span>
-            </div>
+        }
 
-            <button type="submit" class="btn btn-success">Save</button>
-            <a asp-page="./Index" class="btn btn-outline-secondary ms-1">Cancel</a>
-        </form>
-    </div>
+        <div class="flex gap-3 pt-2">
+            <button type="submit" class="bg-brand hover:bg-navy text-white font-semibold text-sm px-5 py-2 rounded transition-colors">Save</button>
+            <a asp-page="./Index" class="border border-gray-300 text-gray-600 hover:border-brand hover:text-brand text-sm px-5 py-2 rounded transition-colors">Cancel</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

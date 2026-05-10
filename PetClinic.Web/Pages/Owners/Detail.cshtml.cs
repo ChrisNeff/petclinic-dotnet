@@ -1,26 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using PetClinic.Core.Entities;
-using PetClinic.Infrastructure.Data;
+using PetClinic.Core.Interfaces;
 
 namespace PetClinic.Web.Pages.Owners;
 
 public class DetailModel : PageModel
 {
-    private readonly AppDbContext _db;
+    private readonly IOwnerRepository _owners;
 
-    public DetailModel(AppDbContext db) => _db = db;
+    public DetailModel(IOwnerRepository owners) => _owners = owners;
 
     public Owner? Owner { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Owner = await _db.Owners
-            .Include(o => o.Pets).ThenInclude(p => p.PetType)
-            .Include(o => o.Pets).ThenInclude(p => p.Visits)
-            .FirstOrDefaultAsync(o => o.Id == id);
-
+        Owner = await _owners.GetByIdWithPetsAsync(id);
         if (Owner == null) return NotFound();
         return Page();
     }

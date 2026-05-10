@@ -1,10 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using PetClinic.Core.Interfaces;
 using PetClinic.Infrastructure.Data;
+using PetClinic.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IVetRepository, VetRepository>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();

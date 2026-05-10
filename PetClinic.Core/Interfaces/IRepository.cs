@@ -1,6 +1,8 @@
+using PetClinic.Core.Entities;
+
 namespace PetClinic.Core.Interfaces;
 
-public interface IRepository<T> where T : class
+public interface IRepository<T> where T : BaseEntity
 {
     Task<T?> GetByIdAsync(int id);
     Task<IReadOnlyList<T>> ListAsync();

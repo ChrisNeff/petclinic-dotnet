@@ -4,52 +4,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PetClinic</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy:   '#005a87',
+                        brand:  '#007cba',
+                        cyan:   '#31cdcf',
+                        purple: '#7a00df',
+                        light:  '#f4f6f8',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #6db33f;">
-        <div class="container">
-            <a class="navbar-brand fw-bold" asp-page="/Index">
-                🐾 PetClinic
+<body class="bg-light min-h-screen flex flex-col text-gray-800">
+
+    <nav class="bg-navy text-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a asp-page="/Index" class="text-xl font-bold tracking-tight text-white hover:text-cyan transition-colors">
+                PetClinic
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Owners/Index">Owners</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Vets/Index">Veterinarians</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/swagger">API</a>
-                    </li>
-                </ul>
+            <div class="flex gap-6 text-sm font-medium">
+                <a asp-page="/Index"         class="hover:text-cyan transition-colors">Home</a>
+                <a asp-page="/Owners/Index"  class="hover:text-cyan transition-colors">Owners</a>
+                <a asp-page="/Vets/Index"    class="hover:text-cyan transition-colors">Veterinarians</a>
+                <a href="/swagger"           class="hover:text-cyan transition-colors">API</a>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <main role="main" class="pb-3">
+    <div class="max-w-6xl mx-auto w-full px-4 py-8 flex-1">
+        <main>
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top mt-5 py-3 text-muted">
-        <div class="container">
-            <small>&copy; 2026 PetClinic — .NET 8 Demo</small>
-        </div>
+    <footer class="border-t border-gray-200 py-4 text-center text-sm text-gray-400">
+        PetClinic — .NET port of the Spring PetClinic sample
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

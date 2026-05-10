@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PetClinic.Infrastructure.Data;
+using PetClinic.Core.Interfaces;
 
 namespace PetClinic.Web.Controllers;
 
@@ -9,15 +8,11 @@ namespace PetClinic.Web.Controllers;
 [Produces("application/json")]
 public class VetsController : ControllerBase
 {
-    private readonly AppDbContext _db;
+    private readonly IVetRepository _vets;
 
-    public VetsController(AppDbContext db) => _db = db;
+    public VetsController(IVetRepository vets) => _vets = vets;
 
     [HttpGet]
     public async Task<IActionResult> GetAll() =>
-        Ok(await _db.Vets
-            .Include(v => v.VetSpecialties)
-                .ThenInclude(vs => vs.Specialty)
-            .OrderBy(v => v.LastName)
-            .ToListAsync());
+        Ok(await _vets.ListWithSpecialtiesAsync());
 }

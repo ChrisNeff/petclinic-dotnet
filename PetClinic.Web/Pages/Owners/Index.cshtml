@@ -4,53 +4,54 @@
     ViewData["Title"] = "Owners";
 }
 
-<h2>Owners</h2>
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold text-navy">Owners</h2>
+    <a asp-page="./Create" class="bg-brand hover:bg-navy text-white text-sm font-semibold px-4 py-2 rounded transition-colors">Add Owner</a>
+</div>
 
-<form method="get" class="row g-2 mb-4">
-    <div class="col-auto">
-        <input type="text" name="lastName" value="@Model.LastName" class="form-control" placeholder="Search by last name…" />
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-success">Find Owners</button>
-        <a asp-page="./Index" class="btn btn-outline-secondary ms-1">Clear</a>
-    </div>
+<form method="get" class="flex gap-2 mb-6">
+    <input type="text" name="lastName" value="@Model.LastName"
+           class="border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand w-64"
+           placeholder="Search by last name…" />
+    <button type="submit" class="bg-brand hover:bg-navy text-white text-sm px-4 py-1.5 rounded transition-colors">Search</button>
+    <a asp-page="./Index" class="border border-gray-300 text-gray-600 hover:border-brand hover:text-brand text-sm px-4 py-1.5 rounded transition-colors">Clear</a>
 </form>
 
 @if (Model.Owners.Count == 0)
 {
-    <div class="alert alert-info">No owners found.</div>
+    <p class="text-gray-400 italic">No owners found.</p>
 }
 else
 {
-    <table class="table table-hover">
-        <thead class="table-success">
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>Telephone</th>
-                <th>Pets</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var owner in Model.Owners)
-            {
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+        <table class="w-full text-sm">
+            <thead class="bg-navy text-white">
                 <tr>
-                    <td>
-                        <a asp-page="./Detail" asp-route-id="@owner.Id">@owner.FullName</a>
-                    </td>
-                    <td>@owner.Address</td>
-                    <td>@owner.City</td>
-                    <td>@owner.Telephone</td>
-                    <td>@string.Join(", ", owner.Pets.Select(p => p.Name))</td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@owner.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                    </td>
+                    <th class="text-left px-4 py-3 font-semibold">Name</th>
+                    <th class="text-left px-4 py-3 font-semibold">Address</th>
+                    <th class="text-left px-4 py-3 font-semibold">City</th>
+                    <th class="text-left px-4 py-3 font-semibold">Telephone</th>
+                    <th class="text-left px-4 py-3 font-semibold">Pets</th>
+                    <th class="px-4 py-3"></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @foreach (var owner in Model.Owners)
+                {
+                    <tr class="hover:bg-light transition-colors">
+                        <td class="px-4 py-3">
+                            <a asp-page="./Detail" asp-route-id="@owner.Id" class="text-brand hover:text-navy font-medium">@owner.FullName</a>
+                        </td>
+                        <td class="px-4 py-3 text-gray-600">@owner.Address</td>
+                        <td class="px-4 py-3 text-gray-600">@owner.City</td>
+                        <td class="px-4 py-3 text-gray-600">@owner.Telephone</td>
+                        <td class="px-4 py-3 text-gray-600">@string.Join(", ", owner.Pets.Select(p => p.Name))</td>
+                        <td class="px-4 py-3">
+                            <a asp-page="./Edit" asp-route-id="@owner.Id" class="text-xs border border-gray-300 text-gray-600 hover:border-brand hover:text-brand px-3 py-1 rounded transition-colors">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
-
-<a asp-page="./Create" class="btn btn-success mt-2">Add Owner</a>

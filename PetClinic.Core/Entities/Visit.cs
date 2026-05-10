@@ -1,8 +1,7 @@
 namespace PetClinic.Core.Entities;
 
-public class Visit
+public class Visit : BaseEntity
 {
-    public int Id { get; set; }
     public DateOnly VisitDate { get; set; }
     public string Description { get; set; } = string.Empty;
 

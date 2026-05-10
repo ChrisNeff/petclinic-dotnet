@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinic.Core.Entities;
-using PetClinic.Infrastructure.Data;
+using PetClinic.Core.Interfaces;
 
 namespace PetClinic.Web.Pages.Owners;
 
 public class CreateModel : PageModel
 {
-    private readonly AppDbContext _db;
+    private readonly IOwnerRepository _owners;
 
-    public CreateModel(AppDbContext db) => _db = db;
+    public CreateModel(IOwnerRepository owners) => _owners = owners;
 
     [BindProperty]
     public Owner Owner { get; set; } = new();
@@ -20,8 +20,7 @@ public class CreateModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        _db.Owners.Add(Owner);
-        await _db.SaveChangesAsync();
+        await _owners.AddAsync(Owner);
         return RedirectToPage("./Detail", new { id = Owner.Id });
     }
 }

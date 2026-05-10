@@ -1,7 +1,6 @@
 namespace PetClinic.Core.Entities;
 
-public class PetType
+public class PetType : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }
