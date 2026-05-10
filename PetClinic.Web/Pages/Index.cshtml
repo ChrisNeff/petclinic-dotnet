@@ -1,0 +1,44 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="text-center py-5">
+    <h1 class="display-5 fw-bold">Welcome to PetClinic</h1>
+    <p class="lead text-muted">A .NET 8 demo application — EF Core, Repository Pattern, ASP.NET Core</p>
+    <div class="mt-4">
+        <a asp-page="/Owners/Index" class="btn btn-success btn-lg me-2">Find Owners</a>
+        <a asp-page="/Vets/Index" class="btn btn-outline-success btn-lg">View Veterinarians</a>
+    </div>
+</div>
+
+<div class="row mt-5 text-center">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <div class="card-body">
+                <h5 class="card-title">Owners &amp; Pets</h5>
+                <p class="card-text text-muted">Browse and manage pet owners and their animals.</p>
+                <a asp-page="/Owners/Index" class="btn btn-sm btn-success">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <div class="card-body">
+                <h5 class="card-title">Veterinarians</h5>
+                <p class="card-text text-muted">View the clinic's vets and their specialties.</p>
+                <a asp-page="/Vets/Index" class="btn btn-sm btn-success">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <div class="card-body">
+                <h5 class="card-title">REST API</h5>
+                <p class="card-text text-muted">Explore the full API surface via Swagger UI.</p>
+                <a href="/swagger" class="btn btn-sm btn-outline-secondary">Go</a>
+            </div>
+        </div>
+    </div>
+</div>

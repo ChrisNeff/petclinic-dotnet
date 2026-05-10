@@ -1,0 +1,40 @@
+@page
+@model PetClinic.Web.Pages.Vets.IndexModel
+@{
+    ViewData["Title"] = "Veterinarians";
+}
+
+<h2>Veterinarians</h2>
+
+@if (!Model.Vets.Any())
+{
+    <div class="alert alert-info">No veterinarians found.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var vet in Model.Vets)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@vet.FullName</h5>
+                        @if (vet.VetSpecialties.Any())
+                        {
+                            <p class="card-text">
+                                @foreach (var vs in vet.VetSpecialties)
+                                {
+                                    <span class="badge bg-success me-1">@vs.Specialty.Name</span>
+                                }
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="card-text text-muted"><em>No specialties</em></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

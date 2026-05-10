@@ -1,0 +1,48 @@
+@page
+@model PetClinic.Web.Pages.Owners.CreateModel
+@{
+    ViewData["Title"] = "Add Owner";
+}
+
+<h2>Add Owner</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Owner.FirstName" class="form-label"></label>
+                <input asp-for="Owner.FirstName" class="form-control" />
+                <span asp-validation-for="Owner.FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Owner.LastName" class="form-label"></label>
+                <input asp-for="Owner.LastName" class="form-control" />
+                <span asp-validation-for="Owner.LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Owner.Address" class="form-label"></label>
+                <input asp-for="Owner.Address" class="form-control" />
+                <span asp-validation-for="Owner.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Owner.City" class="form-label"></label>
+                <input asp-for="Owner.City" class="form-control" />
+                <span asp-validation-for="Owner.City" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Owner.Telephone" class="form-label"></label>
+                <input asp-for="Owner.Telephone" class="form-control" />
+                <span asp-validation-for="Owner.Telephone" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-page="./Index" class="btn btn-outline-secondary ms-1">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
