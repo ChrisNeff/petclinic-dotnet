@@ -1,0 +1,28 @@
+@startuml Use Cases Overview
+left to right direction
+
+actor "Receptionist" as receptionist
+actor "Veterinarian" as vet
+
+rectangle "PetClinic" {
+    usecase "UC-001\nFind an Owner" as UC001
+    usecase "UC-002\nRegister a New Owner" as UC002
+    usecase "UC-003\nView Owner Profile" as UC003
+    usecase "UC-004\nUpdate Owner Information" as UC004
+    usecase "UC-005\nAdd a Pet to an Owner" as UC005
+    usecase "UC-006\nUpdate Pet Information" as UC006
+    usecase "UC-007\nLog a Visit" as UC007
+    usecase "UC-008\nView Veterinarian Directory" as UC008
+}
+
+receptionist --> UC001
+receptionist --> UC002
+receptionist --> UC003
+receptionist --> UC004
+receptionist --> UC005
+receptionist --> UC006
+receptionist --> UC007
+receptionist --> UC008
+vet --> UC008
+
+@enduml

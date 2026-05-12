@@ -4,8 +4,11 @@
 ---
 # Project Context
 
-This project follows the AI Unified Process. Read `docs/vision.md`, `docs/requirements.md`,
-and `docs/entity_model.md` for product context before making decisions.
+This project follows the AI Unified Process on a .NET stack. Before making any decisions, read:
+- `docs/vision.md` — product scope and constraints
+- `docs/requirements.md` — functional and non-functional requirements
+- `docs/entity_model.md` — domain entity model
+- `docs/architecture.md` — tech stack, solution structure, and coding conventions
 
 ## AIUP Workflow
 
@@ -13,10 +16,18 @@ and `docs/entity_model.md` for product context before making decisions.
 2. `/entity-model`        → derives `docs/entity_model.md` from requirements
 3. `/use-case-diagram`    → produces `docs/use_cases.puml`
 4. `/use-case-spec UC-XX` → produces `docs/use_cases/UC-XX-*.md`
-5. `/flyway-migration`    → produces `src/main/resources/db/migration/V*.sql`
-6. `/implement UC-XX`     → implements the use case (Vaadin + jOOQ)
-7. `/browserless-test UC-XX` → server-side unit tests (recommended, free since Vaadin 25.1)
-8. `/playwright-test UC-XX` → browser-based integration tests
+5. EF Core migration      → `dotnet ef migrations add <Name> --project PetClinic.Infrastructure --startup-project PetClinic.Web`
+6. `/implement UC-XX`     → implements the use case (ASP.NET Core controller + Razor Page + EF Core repository)
+7. `/playwright-test UC-XX` → browser-based integration tests
 
 Never skip the spec for a use case before implementing it.
-Always read the entity model before writing data access code.
+Always read `docs/entity_model.md` and `docs/architecture.md` before writing data access code.
+
+## Implementation Notes
+
+- New entities go in `PetClinic.Core/Entities/`, must inherit `BaseEntity`
+- New repository interfaces go in `PetClinic.Core/Interfaces/`
+- Repository implementations go in `PetClinic.Infrastructure/Repositories/`
+- Register new repositories in `PetClinic.Web/Program.cs`
+- Schema changes require an EF Core migration — never edit the SQLite file directly
+- Follow existing API conventions: `[ApiController]`, `IActionResult`, route patterns in `docs/architecture.md`
