@@ -31,3 +31,17 @@ Always read `docs/entity_model.md` and `docs/architecture.md` before writing dat
 - Register new repositories in `PetClinic.Web/Program.cs`
 - Schema changes require an EF Core migration — never edit the SQLite file directly
 - Follow existing API conventions: `[ApiController]`, `IActionResult`, route patterns in `docs/architecture.md`
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (ChrisNeff/petclinic-dotnet), via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
